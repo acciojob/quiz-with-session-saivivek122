@@ -5,6 +5,7 @@
 let obj={}
 let output = document.getElementById("questions")
 let submitButton=document.getElementById("submit")
+let scoreText=document.getElementById("score")
 const questions = [
     {
         question: "What is the capital of France?",
@@ -53,6 +54,7 @@ function renderQuestions() {
             choiceElement.setAttribute("value", choice);
             if(storedOptions[`question-${i}`]===choice){
                 choiceElement.checked=true
+                choiceElement.setAttribute("checked","true")
             }
             // console.log(storedOptions[`question-${i}`])
             choiceElement.addEventListener("click", () => {
@@ -63,7 +65,7 @@ function renderQuestions() {
                 // console.log(choiceElement)
                 obj[choiceElement.name] = choiceElement.value;
                 localStorage.setItem("progress",JSON.stringify(obj))
-                checkScore(choiceElement.value,question.answer);
+                // checkScore(choiceElement.value,question.answer);
                 
                 // }
 
@@ -80,13 +82,21 @@ function renderQuestions() {
 renderQuestions();
 
 
-function checkScore(userOption,answer){
-    if(userOption===answer){
-        score=score+1;
+function checkScore(){
+    for(let i=0;i<questions.length;i++){
+        let userOption=obj[`question-${i}`]
+        if(userOption===questions[i].answer){
+            score=score+1;
+        }
     }
 }
 
 submitButton.addEventListener("click",()=>{
+    // console.log("click")
+    // scoreText.textContent=""
+    score=0
+    checkScore()
     localStorage.setItem("score",score)
+    scoreText.textContent=`Your score is ${score} out of 5`
     console.log(score)
 })
