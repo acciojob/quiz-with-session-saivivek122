@@ -97,6 +97,6 @@ submitButton.addEventListener("click",()=>{
     score=0
     checkScore()
     localStorage.setItem("score",score)
-    scoreText.textContent=`Your score is ${score} out of 5`
+    scoreText.textContent=`Your score is ${score} out of 5.`
     console.log(score)
 })
